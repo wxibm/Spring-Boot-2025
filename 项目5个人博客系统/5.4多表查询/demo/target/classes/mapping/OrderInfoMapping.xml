@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.OrderInfoMapper">
+    <resultMap id="BaseResultMap" type="OrderInfo">
+        <result column="product_id" property="productId"></result>
+        <result column="product_name" property="productName"></result>
+        <result column="produce_price" property="producePrice"></result>
+
+        <!--        ofType属性与javaType属性对应，它用于指定实体对象ofType 中集合类属性所包含的元素类型。-->
+        <collection property="orderList" ofType="Order">
+            <result column="order_id" property="orderId"></result>
+            <result column="user_id" property="userId"></result>
+            <result column="product_id" property="productId"></result>
+            <result column="order_count" property="orderCount"></result>
+        </collection>
+
+        <!--        ofType属性与javaType属性对应，它用于指定实体对象ofType 中集合类属性所包含的元素类型。-->
+        <collection property="userList" ofType="User">
+            <result column="id" property="id"></result>
+            <result column="user_name" property="userName"></result>
+            <result column="password" property="password"></result>
+        </collection>
+    </resultMap>
+<!--查看商品被哪些订单哪些用户购买过-->
+    <select id="selectOrderInfo" resultMap="BaseResultMap">
+        SELECT tb_product.product_id,tb_product.product_name,tb_product.produce_price,tb_order.order_id,tb_order.user_id,tb_order.order_count,tb_user.user_name
+        FROM tb_product,tb_order,tb_user WHERE tb_product.product_id=tb_order.product_id AND tb_order.user_id=tb_user.id;
+    </select>
+</mapper>
