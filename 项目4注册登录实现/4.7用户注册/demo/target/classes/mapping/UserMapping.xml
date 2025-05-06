@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+    </resultMap>
+
+<!--    sql用于定义可复用的SQL语句块，列出数据库字段名-->
+    <sql id="Base_Column_List">
+        id,user_name,password
+    </sql>
+
+    <select id="checkUserName" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM user
+        WHERE user_name=#{userName}
+    </select>
+
+    <insert id="insertUser">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO user (user_name,password) VALUES (#{userName},#{password})
+    </insert>
+</mapper>
