@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>添加用户数据</title>
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/HtmlUtil.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#btn_add").click(function() {
+					addUser();
+				});
+			});
+
+			function addUser() {
+				$.ajax({
+					type: "POST",
+					url: path.userInsert,
+					dataType: "JSON",
+					contentType: "application/json;charset=utf-8",
+					//400无效请求,前后台传入的数据不匹配，后台无法解析数据，进行查询。emmmm…经过一番百度，提到对请求数据进行json 序列
+					data: JSON.stringify({
+						// JSON.parse和JSON.stringify
+						userName: HtmlUtil.htmlEncode($("#txt_userName").val()),
+						password: HtmlUtil.htmlEncode($("#txt_password").val()),
+						userAvatar: HtmlUtil.htmlEncode($("#txt_userAvatar").val()),
+						createDate: HtmlUtil.htmlEncode($("#txt_createDate").val())
+					}),
+					success: function(json) {
+						if (json.code == 200) {
+							alert(json.msg);
+							location.href = "index.html";
+						} else {
+							alert("添加用户失败");
+						}
+					},
+					error: function() {
+						alert("系统出错");
+					}
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<h3>添加用户数据</h3>
+		<div><label for="txt_id">主键:</label>
+			<input id="txt_id" type="text" required />
+		</div>
+		<div><label for="txt_userName">账户:</label>
+			<input id="txt_userName" type="text" required />
+		</div>
+		<div><label for="txt_password">密码:</label>
+			<input id="txt_password" type="text" required />
+		</div>
+		<div><label for="txt_userAvatar">头像:</label>
+			<input id="txt_userAvatar" type="text" required />
+		</div>
+		<div><label for="txt_createDate">时间:</label>
+			<input id="txt_createDate" type="text" required />
+		</div>
+		<div><input id="btn_add" type="submit" /></div>
+	</body>
+</html>

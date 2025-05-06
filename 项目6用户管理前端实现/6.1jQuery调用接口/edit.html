@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>修改用户数据</title>
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/HtmlUtil.js"></script>
+		<script type="text/javascript">
+			window.onload = function() {
+				// 获取查询字符串
+				var queryString = window.location.search.substring(1);
+				readUser(queryString.substring(3,queryString.length));
+			}
+			
+			function readUser(id) {
+				$.ajax({
+					type: "GET",
+					url: path.userRead + id,
+					dataType: "JSON",
+					success: function(data) {
+						if (data.code == 200) {
+							$("#txt_id").val(id);
+							$("#txt_userName").val(data.data.userName);
+							$("#txt_password").val(data.data.password);
+							$("#txt_userAvatar").val(data.data.userAvatar);
+							$("#txt_createDate").val(data.data.createDate);
+						} else
+							alert(data.code);
+					},
+					error: function() {
+						alert("系统出错");
+					}
+				});
+			}
+			
+			function editUser(id) {
+				$.ajax({
+					type: "PUT",
+					url: path.userUpdate,
+					dataType: "JSON",
+					contentType: "application/json;charset=utf-8",
+					// contentType: 'application/json',
+					//400无效请求,前后台传入的数据不匹配，后台无法解析数据，进行查询。emmmm…经过一番百度，提到对请求数据进行json 序列
+					data: JSON.stringify({
+						// JSON.parse和JSON.stringify
+						id: id,
+						userName: HtmlUtil.htmlEncode($("#txt_userName").val()),
+						password: HtmlUtil.htmlEncode($("#txt_password").val()),
+						userAvatar: HtmlUtil.htmlEncode($("#txt_userAvatar").val()),
+						createDate: HtmlUtil.htmlEncode($("#txt_createDate").val())
+					}),
+					success: function(json) {
+						// console.log(json);
+						if (json.code == 200) {
+							alert(json.msg);
+							window.location.href = "index.html";
+						} else {
+							alert("修改用户失败");
+						}
+					},
+					error: function() {
+						alert("系统出错");
+					}
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<h3>修改用户数据</h3>
+		<div><label for="txt_id">主键:</label>
+			<input id="txt_id" type="text" disabled required />
+		</div>
+		<div><label for="txt_userName">账户:</label>
+			<input id="txt_userName" type="text" required />
+		</div>
+		<div><label for="txt_password">密码:</label>
+			<input id="txt_password" type="text" required />
+		</div>
+		<div><label for="txt_userAvatar">头像:</label>
+			<input id="txt_userAvatar" type="text" required />
+		</div>
+		<div><label for="txt_createDate">时间:</label>
+			<input id="txt_createDate" type="text" required />
+		</div>
+		<div><input type="submit" onclick="editUser($('#txt_id').val())"/></div>
+	</body>
+</html>
