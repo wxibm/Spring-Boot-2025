@@ -1,0 +1,21 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/mydata?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      enabled: true
+#      max-file-size: 指定上传文件允许的最大大小。 默认值为1MB
+      max-file-size: 1MB
+#      max-request-size: 指定multipart/form-data请求允许的最大大小。 默认值为10MB
+      max-request-size: 10MB
+
+mybatis:
+  mapper-locations: classpath:mapping/*Mapping.xml
+  #  放在resources的mapping文件夹中
+  type-aliases-package: com.example.demo.entity

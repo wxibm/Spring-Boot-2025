@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.NewsMapper">
+
+    <resultMap id="BaseResultMap" type="News">
+        <result column="news_id" jdbcType="INTEGER" property="newsId" />
+        <result column="news_title" jdbcType="VARCHAR" property="newsTitle" />
+        <result column="news_content" jdbcType="VARCHAR" property="newsContent" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="CREATE_USER" jdbcType="INTEGER" property="createUser" />
+        <result column="CREATE_TIME" jdbcType="DATE" property="createTime" />
+        <result column="UPDATE_USER" jdbcType="INTEGER" property="updateUser" />
+        <result column="UPDATE_TIME" jdbcType="DATE" property="updateTime" />
+    </resultMap>
+
+    <!--    sql用于定义可复用的SQL语句块，列出数据库字段名-->
+    <sql id="Base_Column_List">
+        news_id,news_title,news_content,user_id
+    </sql>
+
+    <select id="selectNewsByUserId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM tb_news
+        WHERE user_id=#{userId}
+    </select>
+
+    <select id="selectUserIdByNewsId" resultType="INTEGER">
+        SELECT user_id
+        FROM tb_news
+        WHERE news_id=#{newsId}
+    </select>
+
+    <delete id="deleteNews">
+        DELETE FROM tb_news
+        WHERE news_id=#{newsId}
+    </delete>
+
+    <insert id="insertNews">
+        INSERT INTO tb_news (news_id,news_title,news_content,user_id,CREATE_USER,CREATE_TIME,UPDATE_USER,UPDATE_TIME)
+        VALUES (#{newsId},#{newsTitle},#{newsContent}, #{userId},#{createUser},#{createTime},#{updateUser},#{updateTime})
+    </insert>
+
+    <update id="updateNews" parameterType="News">
+        UPDATE tb_news SET news_title = #{newsTitle},news_content = #{newsContent},UPDATE_USER = #{updateUser},UPDATE_TIME = #{updateTime}
+        WHERE `news_id` = #{newsId}
+    </update>
+</mapper>
