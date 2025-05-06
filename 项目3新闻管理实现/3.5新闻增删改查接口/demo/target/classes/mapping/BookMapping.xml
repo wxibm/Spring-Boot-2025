@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.BookMapper">
+
+    <resultMap id="BaseResultMap" type="Book">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+        <result column="book_author" jdbcType="VARCHAR" property="bookAuthor" />
+        <result column="book_price" jdbcType="DECIMAL" property="bookPrice" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,book_name,book_author,book_price
+    </sql>
+
+    <select id="selectAllBooks" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM tb_book
+    </select>
+
+    <select id="selectBooksByLimit" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM tb_book LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="selectBySearch" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM tb_book
+        WHERE ${condition} LIKE CONCAT('%',#{content},'%')
+    </select>
+
+    <select id="selectBooksCount">
+        SELECT COUNT(*) FROM tb_book
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM tb_book
+        WHERE `id` = #{id}
+    </select>
+
+    <insert id="insertBook">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO tb_book (book_name,book_author,book_price) VALUES (#{bookName},#{bookAuthor},#{bookPrice})
+    </insert>
+
+    <delete id="deleteBook">
+        DELETE FROM tb_book
+        WHERE `id` = #{id}
+    </delete>
+
+    <update id="updateBook" parameterType="Book">
+        UPDATE tb_book SET id = #{id},book_name = #{bookName},book_author = #{bookAuthor},book_price = #{bookPrice}
+        WHERE `id` = #{id}
+    </update>
+
+    <update id="patchBook" parameterType="Book">
+        UPDATE tb_book
+        <trim prefix="SET" suffixOverrides="," suffix=" WHERE id=#{id}">
+            <if test ="bookName!=null and bookName.trim()!=''">book_name = #{bookName},</if>
+            <if test ="bookAuthor!=null and bookAuthor.trim()!=''">book_author = #{bookAuthor},</if>
+            <if test ="bookPrice!=null">book_price = #{bookPrice},</if>
+        </trim>
+    </update>
+</mapper>

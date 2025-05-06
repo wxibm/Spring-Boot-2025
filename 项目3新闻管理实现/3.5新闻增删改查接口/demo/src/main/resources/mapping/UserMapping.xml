@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="user_avatar" jdbcType="VARCHAR" property="userAvatar" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_name,password,user_avatar,create_date
+    </sql>
+
+    <select id="selectAllUsers" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM tb_user
+    </select>
+
+    <select id="selectUsersByLimit" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM tb_user LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="selectBySearch" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM tb_user
+        WHERE ${condition} LIKE CONCAT('%',#{content},'%')
+    </select>
+
+    <select id="selectUsersCount">
+        SELECT COUNT(*) FROM tb_user
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM tb_user
+        WHERE `id` = #{id}
+    </select>
+
+    <insert id="insertUser">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO tb_user (user_name,password,user_avatar,create_date) VALUES (#{userName},#{password},#{userAvatar}, NOW())
+    </insert>
+
+    <delete id="deleteUser">
+        DELETE FROM tb_user
+        WHERE `id` = #{id}
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE tb_user SET id = #{id},user_name = #{userName},password = #{password},user_avatar = #{userAvatar},create_date = #{createDate}
+        WHERE `id` = #{id}
+    </update>
+
+    <update id="patchUser" parameterType="User">
+        UPDATE tb_user
+        <trim prefix="SET" suffixOverrides="," suffix=" WHERE id=#{id}">
+            <if test ="userName!=null and userName.trim()!=''">user_name = #{userName},</if>
+            <if test ="password!=null and password.trim()!=''">password = #{password},</if>
+            <if test ="userAvatar!=null and userAvatar.trim()!=''">user_avatar = #{userAvatar},</if>
+            <if test ="createDate!=null and createDate.trim()!=''">create_date = #{createDate},</if>
+        </trim>
+    </update>
+</mapper>
