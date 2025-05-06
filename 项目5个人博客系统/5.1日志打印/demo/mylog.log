@@ -1,0 +1,26 @@
+2024-12-09T11:22:33.730+08:00 TRACE 1316 --- [http-nio-8080-exec-1] c.e.demo.controller.LogTestController    : (1)trace
+2024-12-09T11:22:33.732+08:00 DEBUG 1316 --- [http-nio-8080-exec-1] c.e.demo.controller.LogTestController    : (2)debug
+2024-12-09T11:22:33.732+08:00  INFO 1316 --- [http-nio-8080-exec-1] c.e.demo.controller.LogTestController    : (3)info
+2024-12-09T11:22:33.732+08:00  WARN 1316 --- [http-nio-8080-exec-1] c.e.demo.controller.LogTestController    : (4)warn
+2024-12-09T11:22:33.732+08:00 ERROR 1316 --- [http-nio-8080-exec-1] c.e.demo.controller.LogTestController    : (5)error
+2024-12-09T11:29:14.631+08:00 ERROR 1316 --- [http-nio-8080-exec-3] c.example.demo.controller.LogController  : I am error
+2024-12-09T14:44:35.192+08:00 TRACE 19448 --- [http-nio-8080-exec-1] c.example.demo.controller.LogController  : I am trace
+2024-12-09T14:44:35.194+08:00 DEBUG 19448 --- [http-nio-8080-exec-1] c.example.demo.controller.LogController  : I am debug
+2024-12-09T14:44:35.194+08:00  INFO 19448 --- [http-nio-8080-exec-1] c.example.demo.controller.LogController  : I am info
+2024-12-09T14:44:35.194+08:00  WARN 19448 --- [http-nio-8080-exec-1] c.example.demo.controller.LogController  : I am warn
+2024-12-09T14:44:35.194+08:00 ERROR 19448 --- [http-nio-8080-exec-1] c.example.demo.controller.LogController  : I am error
+2024-12-09T14:44:57.388+08:00 TRACE 19448 --- [http-nio-8080-exec-2] c.example.demo.controller.LogController  : I am trace
+2024-12-09T14:44:57.388+08:00 DEBUG 19448 --- [http-nio-8080-exec-2] c.example.demo.controller.LogController  : I am debug
+2024-12-09T14:44:57.388+08:00  INFO 19448 --- [http-nio-8080-exec-2] c.example.demo.controller.LogController  : I am info
+2024-12-09T14:44:57.388+08:00  WARN 19448 --- [http-nio-8080-exec-2] c.example.demo.controller.LogController  : I am warn
+2024-12-09T14:44:57.388+08:00 ERROR 19448 --- [http-nio-8080-exec-2] c.example.demo.controller.LogController  : I am error
+2024-12-09T14:45:03.580+08:00 TRACE 19448 --- [http-nio-8080-exec-3] c.example.demo.controller.LogController  : I am trace
+2024-12-09T14:45:03.580+08:00 DEBUG 19448 --- [http-nio-8080-exec-3] c.example.demo.controller.LogController  : I am debug
+2024-12-09T14:45:03.580+08:00  INFO 19448 --- [http-nio-8080-exec-3] c.example.demo.controller.LogController  : I am info
+2024-12-09T14:45:03.581+08:00  WARN 19448 --- [http-nio-8080-exec-3] c.example.demo.controller.LogController  : I am warn
+2024-12-09T14:45:03.582+08:00 ERROR 19448 --- [http-nio-8080-exec-3] c.example.demo.controller.LogController  : I am error
+2024-12-09T14:45:10.553+08:00 TRACE 19448 --- [http-nio-8080-exec-7] c.example.demo.controller.LogController  : I am trace
+2024-12-09T14:45:10.553+08:00 DEBUG 19448 --- [http-nio-8080-exec-7] c.example.demo.controller.LogController  : I am debug
+2024-12-09T14:45:10.553+08:00  INFO 19448 --- [http-nio-8080-exec-7] c.example.demo.controller.LogController  : I am info
+2024-12-09T14:45:10.553+08:00  WARN 19448 --- [http-nio-8080-exec-7] c.example.demo.controller.LogController  : I am warn
+2024-12-09T14:45:10.553+08:00 ERROR 19448 --- [http-nio-8080-exec-7] c.example.demo.controller.LogController  : I am error

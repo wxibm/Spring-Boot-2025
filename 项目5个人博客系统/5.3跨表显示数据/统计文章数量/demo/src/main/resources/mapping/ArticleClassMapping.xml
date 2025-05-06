@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ArticleClassMapper">
+
+    <resultMap id="BaseResultMap" type="ArticleClass">
+        <result column="article_class_id" jdbcType="INTEGER" property="article_class_id" />
+        <result column="article_class_name" jdbcType="VARCHAR" property="article_class_name" />
+<!--        自定义的字段-->
+        <result column="article_num" jdbcType="VARCHAR" property="article_num" />
+    </resultMap>
+
+    <select id="selectArticleNum" resultMap="BaseResultMap">
+        SELECT article_class_id,article_class_name,(SELECT COUNT(*) FROM tb_article WHERE tb_article.article_class_id=tb_article_class.article_class_id) AS article_num
+        FROM tb_article_class;
+    </select>
+
+</mapper>
